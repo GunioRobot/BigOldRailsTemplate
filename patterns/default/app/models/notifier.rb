@@ -1,6 +1,6 @@
 class Notifier < ActionMailer::Base
   default_url_options[:host] = "#{default_url_options_host}"
-  
+
   def password_reset_instructions(user)
     setup(user)
     subject I18n.t("subject.password_reset_instructions")
@@ -12,7 +12,7 @@ class Notifier < ActionMailer::Base
     subject I18n.t("subject.welcome")
     body :user => user
   end
-  
+
   #{activation_instructions_block}
 private
 
@@ -21,5 +21,5 @@ private
     sent_on Time.now
     recipients user.email
   end
-  
+
 end

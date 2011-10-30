@@ -1,6 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
+
   # Block method that creates an area of the view that
   # is only rendered if the request is coming from an
   # anonymous user.
@@ -9,7 +9,7 @@ module ApplicationHelper
       block.call
     end
   end
-  
+
   # Block method that creates an area of the view that
   # only renders if the request is coming from an
   # authenticated user.
@@ -18,7 +18,7 @@ module ApplicationHelper
       block.call
     end
   end
-  
+
   # Block method that creates an area of the view that
   # only renders if the request is coming from an
   # administrative user.
@@ -33,5 +33,5 @@ private
       block.call
     end
   end
-  
+
 end

@@ -10,11 +10,11 @@
 ( function() {
 	var NAMESPACE = 'log';
 	var IE6_POSITION_FIXED = true; // enable IE6 {position:fixed}
-	
+
 	var bbird;
 	var outputList;
 	var cache = [];
-	
+
 	var state = getState();
 	var classes = {};
 	var profiler = {};
@@ -32,7 +32,7 @@
 		error: true,
 		profile: true
 	};
-	
+
 	function generateMarkup() { //build markup
 		var spans = [];
 		for ( type in messageTypes ) {
@@ -70,7 +70,7 @@
 
 	function backgroundImage() { //(IE6 only) change <BODY> tag's background to resolve {position:fixed} support
 		var bodyTag = document.getElementsByTagName( 'BODY' )[ 0 ];
-		
+
 		if ( bodyTag.currentStyle && IE6_POSITION_FIXED ) {
 			if (bodyTag.currentStyle.backgroundImage == 'none' ) {
 				bodyTag.style.backgroundImage = 'url(about:blank)';
@@ -93,11 +93,11 @@
 			cache.push( [ '<li class="', type, '"><span class="icon"></span>', content, '</li>' ].join( '' ) );
 		}
 	}
-	
+
 	function clear() { //clear list output
 		outputList.innerHTML = '';
 	}
-	
+
 	function clickControl( evt ) {
 		if ( !evt ) evt = window.event;
 		var el = ( evt.target ) ? evt.target : evt.srcElement;
@@ -110,7 +110,7 @@
 			}
 		}
 	}
-	
+
 	function clickFilter( evt ) { //show/hide a specific message type
 		if ( !evt ) evt = window.event;
 		var span = ( evt.target ) ? evt.target : evt.srcElement;
@@ -159,33 +159,33 @@
 		state.load = el.checked;
 		setState();
 	}
-	
-	
+
+
 	function scrollToBottom() { //scroll list output to the bottom
 		outputList.scrollTop = outputList.scrollHeight;
 	}
-	
+
 	function isVisible() { //determine the visibility
 		return ( bbird.style.display == 'block' );
 	}
 
-	function hide() { 
+	function hide() {
 	  bbird.style.display = 'none';
 	}
-			
+
 	function show() {
 		var body = document.getElementsByTagName( 'BODY' )[ 0 ];
 		body.removeChild( bbird );
 		body.appendChild( bbird );
 		bbird.style.display = 'block';
 	}
-	
+
 	//sets the position
 	function reposition( position ) {
 		if ( position === undefined || position == null ) {
 			position = ( state && state.pos === null ) ? 1 : ( state.pos + 1 ) % 4; //set to initial position ('topRight') or move to next position
 		}
-				
+
 		switch ( position ) {
 			case 0: classes[ 0 ] = 'bbTopLeft'; break;
 			case 1: classes[ 0 ] = 'bbTopRight'; break;
@@ -205,7 +205,7 @@
 
 		var span = document.getElementById( IDs.size );
 		span.title = ( size === 1 ) ? 'small' : 'large';
-		span.className = span.title;	  
+		span.className = span.title;
 
 		state.size = size;
 		setState();
@@ -215,11 +215,11 @@
 	function setState() {
 		var props = [];
 		for ( entry in state ) {
-			var value = ( state[ entry ] && state[ entry ].constructor === String ) ? '"' + state[ entry ] + '"' : state[ entry ]; 
+			var value = ( state[ entry ] && state[ entry ].constructor === String ) ? '"' + state[ entry ] + '"' : state[ entry ];
 			props.push( entry + ':' + value );
 		}
 		props = props.join( ',' );
-		
+
 		var expiration = new Date();
 		expiration.setDate( expiration.getDate() + 14 );
 		document.cookie = [ 'blackbird={', props, '}; expires=', expiration.toUTCString() ,';' ].join( '' );
@@ -230,22 +230,22 @@
 		}
 		bbird.className = newClass.join( ' ' );
 	}
-	
+
 	function getState() {
 		var re = new RegExp( /blackbird=({[^;]+})(;|\b|$)/ );
 		var match = re.exec( document.cookie );
 		return ( match && match[ 1 ] ) ? eval( '(' + match[ 1 ] + ')' ) : { pos:null, size:null, load:null };
 	}
-	
+
 	//event handler for 'keyup' event for window
 	function readKey( evt ) {
 		if ( !evt ) evt = window.event;
 		var code = 113; //F2 key
-					
+
 		if ( evt && evt.keyCode == code ) {
-					
+
 			var visible = isVisible();
-					
+
 			if ( visible && evt.shiftKey && evt.altKey ) clear();
 			else if	 (visible && evt.shiftKey ) reposition();
 			else if ( !evt.shiftKey && !evt.altKey ) {
@@ -280,7 +280,7 @@
 			function() { clear(); },
 		move:
 			function() { reposition(); },
-		debug: 
+		debug:
 			function( msg ) { addMessage( 'debug', msg ); },
 		warn:
 			function( msg ) { addMessage( 'warn', msg ); },
@@ -288,10 +288,10 @@
 			function( msg ) { addMessage( 'info', msg ); },
 		error:
 			function( msg ) { addMessage( 'error', msg ); },
-		profile: 
+		profile:
 			function( label ) {
 				var currentTime = new Date(); //record the current time when profile() is executed
-				
+
 				if ( label == undefined || label == '' ) {
 					addMessage( 'error', '<b>ERROR:</b> Please specify a label for your profile statement' );
 				}
@@ -307,15 +307,15 @@
 			}
 	}
 
-	addEvent( window, 'load', 
+	addEvent( window, 'load',
 		/* initialize Blackbird when the page loads */
 		function() {
 			var body = document.getElementsByTagName( 'BODY' )[ 0 ];
 			bbird = body.appendChild( generateMarkup() );
 			outputList = bbird.getElementsByTagName( 'OL' )[ 0 ];
-		
+
 			backgroundImage();
-		
+
 			//add events
 			addEvent( IDs.checkbox, 'click', clickVis );
 			addEvent( IDs.filters, 'click', clickFilter );
@@ -326,7 +326,7 @@
 			reposition( state.pos );
 			if ( state.load ) {
 				show();
-				document.getElementById( IDs.checkbox ).checked = true; 
+				document.getElementById( IDs.checkbox ).checked = true;
 			}
 
 			scrollToBottom();

@@ -6,10 +6,10 @@ class UserCanLoginTest < ActionController::IntegrationTest
     setup do
       #{generate_user_block}
     end
-    
+
     should 'be able to login with valid id and password' do
       visit login_path
-      
+
       fill_in 'Login', :with => @the_user.login
       fill_in 'Password', :with => @the_user.password
 

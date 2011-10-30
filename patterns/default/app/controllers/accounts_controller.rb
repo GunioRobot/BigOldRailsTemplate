@@ -1,14 +1,14 @@
 class AccountsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
-  
+
   def new
     @user = User.new
     render :template => "users/new"
   end
 
   #{account_create_block}
-  
+
   def show
     find_user
     render :template => "users/show"
@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
     find_user
     render :template => "users/edit"
   end
-  
+
   def update
     find_user
     if @user.update_attributes(params[:user])
@@ -34,5 +34,5 @@ private
   def find_user
     @user = @current_user
   end
-  
+
 end

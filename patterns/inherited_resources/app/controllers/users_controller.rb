@@ -2,7 +2,7 @@ class UsersController < InheritedResources::Base
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
   before_filter :admin_required, :only => [:index, :destroy, :impersonate]
-  
+
 #{user_create_block}
 
   update! do |success, failure|
@@ -18,13 +18,13 @@ class UsersController < InheritedResources::Base
     end
     redirect_back_or_default root_url
   end
-  
+
 private
   def resource
     @user ||= if(@current_user.admin? && params[:id])
       User.find(params[:id])
     else
       @current_user
-    end    
+    end
   end
 end

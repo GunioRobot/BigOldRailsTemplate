@@ -81,7 +81,7 @@ context "#activate!" do
       @user.activate!
       assert @user.active
     end
-  
+
     should "save the user" do
       mock(@user).save
       @user.activate!
@@ -93,7 +93,7 @@ context "#activate!" do
       @user.activate!(:user => {:password => "sekrit", :password_confirmation => "sekrit"})
       assert @user.active
     end
-  
+
     should "set the password" do
       @user.activate!(:user => {:password => "sekrit", :password_confirmation => "sekrit"})
       assert_equal "sekrit", @user.password

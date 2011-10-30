@@ -4,16 +4,16 @@
 # What you get:
 #   - complete git integration (all you need to know is install, uninstall and update)
 #   - complete github integration (only use author name + plugin name)
-#   - rails plugin hooks (install.rb/uninstall.rb) are taken care of 
+#   - rails plugin hooks (install.rb/uninstall.rb) are taken care of
 #
 # Available commands:
-# 
+#
 # rake git:submodules:init
 #   You don't have to run this, but someone cloning your repo does
-# 
+#
 # rake git:plugin:install maxim-shmacros
 #   Install github.com/maxim/shmacros plugin (you can also use / (ie maxim/shmacros))
-#   
+#
 # rake git:plugin:uninstall shmacros
 #   Uninstall shmacros plugin (no author name this time)
 #
@@ -35,7 +35,7 @@ namespace :git do
       system "git submodule update"
     end
   end
-  
+
   namespace :plugin do
     desc "Install rails plugin as git submodule"
     task :install do
@@ -47,49 +47,49 @@ namespace :git do
       else
         user_nick, plugin_name = ARGV[1].split(/[\/-]/, 2).map(&:strip)
       end
-      
+
       if [user_nick, plugin_name].any?(&:nil?)
         puts "Plugin path is invalid."
         exit(0)
       end
-      
+
       origin = "git://github.com/#{user_nick}/#{plugin_name}.git"
       destination = "vendor/plugins/#{plugin_name}"
       (puts "Plugin #{plugin_name} is already installed."; exit(0)) if File.exist?(destination)
       puts "Installing #{origin} into #{destination}."
       system "git submodule add #{origin} #{destination}"
       installed = plugin_installed?(plugin_name)
-      
+
       if installed && File.exist?(install_hook = "#{destination}/install.rb")
         puts "Running #{install_hook}..."
         Rake::Task[:environment].invoke
         load install_hook
       end
-      
+
       if !installed
         puts "Installation failed."
         exit(0)
       end
-      
+
       Rake::Task['git:submodules:init'].invoke
-      
+
       puts "Plugin #{plugin_name} is successfully installed."
       exit(0)
     end
-    
+
     desc "Uninstall submodule'd plugin"
     task :uninstall do
       plugin_name = ARGV[1].strip
       (puts "Plugin #{plugin_name} not found."; exit(0)) unless plugin_installed?(plugin_name)
-      
+
       submodule = plugins_list.find{|p| p[:name] == plugin_name}
-      
+
       if File.exist?(uninstall_hook = "#{submodule[:path]}/uninstall.rb")
         puts "Running #{uninstall_hook}..."
         Rake::Task[:environment].invoke
         load uninstall_hook
       end
-      
+
       lines = File.readlines(".gitmodules")
       lines_count = 0
       goner_lines = []
@@ -101,10 +101,10 @@ namespace :git do
         end
         lines_count += 3
       end
-      
+
       goner_lines.each{|num| lines[num] = nil}
       lines.compact!
-      
+
       File.open(".gitmodules", "w") do |gitmodule|
         gitmodule.write(lines.join)
       end
@@ -122,19 +122,19 @@ namespace :git do
 
       goner_lines.each{|num| lines[num] = nil}
       lines.compact!
-      
+
       File.open(".git/config", "w") do |config_file|
         config_file.write(lines.join)
       end
       puts "Removed declaration from .git/config."
-      
+
       system "git rm --cached #{submodule[:path]}"
       system "rm -rf #{submodule[:path]}"
       system "git add .gitmodules"
       puts "Done!"
       exit(0)
     end
-    
+
     desc "Update a plugin"
     task :update => "git:submodules:init" do
       plugin_name = ARGV[1].strip
@@ -147,7 +147,7 @@ namespace :git do
       exit(0)
     end
   end
-  
+
   namespace :plugins do
     desc "List all submodule'd plugins"
     task :list do
@@ -160,7 +160,7 @@ namespace :git do
         puts "\n"
       end
     end
-    
+
     desc "Update all plugins"
     task :update do
       plugins_list.each do |plugin|
@@ -168,7 +168,7 @@ namespace :git do
       end
     end
   end
-  
+
   def plugins_list
     gitmodules_file = read_gitmodules_or_fail
     lines = gitmodules_file.split("\n")
@@ -176,13 +176,13 @@ namespace :git do
     lines.each_slice(3) do |declaration|
       next if declaration[1] =~ /vendor\/rails/
       path = declaration[1].split('=')[1].strip
-      
+
       if (head = File.read("#{path}/.git/HEAD")).include?(':')
         hash = File.read(path + "/.git/" + head.split(':')[1].strip).strip
       else
         hash = head
       end
-      
+
       submodule = {
         :path => path,
         :name => path.split('/').last,
@@ -191,12 +191,12 @@ namespace :git do
       }
       submodules << submodule
     end
-    
+
     submodules
   end
-  
+
   def read_gitmodules_or_fail
-    if !File.exist?('.gitmodules') || 
+    if !File.exist?('.gitmodules') ||
       (gitmodules_file = File.read('.gitmodules').strip).empty? ||
       (gitmodules_file.split("\n").size < 6 && gitmodules_file =~ /vendor\/rails/)
       puts "No plugins found."
@@ -204,7 +204,7 @@ namespace :git do
     end
     gitmodules_file
   end
-  
+
   def plugin_installed?(name)
     plugins_list.find{|p| p[:name] == name}
   end

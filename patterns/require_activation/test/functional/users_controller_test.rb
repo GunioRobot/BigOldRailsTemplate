@@ -1,20 +1,20 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-  
+
   should_have_before_filter :require_no_user, :only => [:new, :create]
   should_have_before_filter :require_user, :only => [:show, :edit, :update]
   should_have_before_filter :admin_required, :only => [:index, :destroy]
-  
-  
+
+
   context "routing" do
     should_rest_route
-    
+
     context "named routes" do
       setup do
         get :index
       end
-      
+
       should "generate users_path" do
         assert_equal "/users", users_path
       end
@@ -29,7 +29,7 @@ class UsersControllerTest < ActionController::TestCase
       end
     end
   end
-    
+
   context "on GET to :index" do
     setup do
       #{generate_stub 'controller', 'admin_required', 'true'}
@@ -37,13 +37,13 @@ class UsersControllerTest < ActionController::TestCase
       #{generate_stub 'User', 'all', '[@the_user]'}
       get :index
     end
-    
+
     should_assign_to(:users) { [@the_user] }
     should_respond_with :success
     should_render_template :index
     should_not_set_the_flash
   end
-   
+
   context "on GET to :new" do
     setup do
       #{generate_stub 'controller', 'require_no_user', 'true'}
@@ -51,7 +51,7 @@ class UsersControllerTest < ActionController::TestCase
       #{generate_stub 'User', 'new', '@the_user'}
       get :new
     end
-    
+
     should_assign_to(:user) { @the_user }
     should_respond_with :success
     should_render_template :new
@@ -64,7 +64,7 @@ class UsersControllerTest < ActionController::TestCase
       @the_user = User.generate!
       #{generate_stub 'User', 'new', '@the_user'}
     end
-    
+
     context "with successful creation" do
       setup do
         #{generate_stub '@the_user', 'signup!', 'true'}
@@ -76,24 +76,24 @@ class UsersControllerTest < ActionController::TestCase
       should_set_the_flash_to I18n.t("flash.accounts.create.notice")
       should_redirect_to("the root url") { root_url }
     end
-    
+
     context "with failed creation" do
       setup do
         #{generate_stub '@the_user', 'signup!', 'false'}
         post :create, :user => { :login => "bobby", :password => "bobby", :password_confirmation => "bobby" }
       end
-      
+
       should_assign_to(:user) { @the_user }
       should_respond_with :success
       should_not_set_the_flash
       should_render_template :new
     end
   end
-  
+
   context "with a regular user" do
     # TODO: insert checks that user can only get to their own stuff, even with spoofed URLs
   end
-  
+
   context "with an admin user" do
     setup do
       @admin_user = User.generate!
@@ -107,7 +107,7 @@ class UsersControllerTest < ActionController::TestCase
       setup do
         get :show, :id => @the_user.id
       end
-    
+
       should_assign_to(:user) { @the_user }
       should_respond_with :success
       should_not_set_the_flash
@@ -118,7 +118,7 @@ class UsersControllerTest < ActionController::TestCase
       setup do
         get :edit, :id => @the_user.id
       end
-    
+
       should_assign_to(:user) { @the_user }
       should_respond_with :success
       should_not_set_the_flash
@@ -131,26 +131,26 @@ class UsersControllerTest < ActionController::TestCase
           #{generate_any_instance_stub 'User', 'update_attributes', 'true'}
           put :update, :id => @the_user.id, :user => { :login => "bill" }
         end
-      
+
         should_assign_to(:user) { @the_user }
         should_respond_with :redirect
         should_set_the_flash_to I18n.t("flash.users.update.notice")
         should_redirect_to("the user's account") { account_url }
       end
-    
+
       context "with failed update" do
         setup do
           #{generate_any_instance_stub 'User', 'update_attributes', 'false'}
           put :update, :id => @the_user.id, :user => { :login => "bill" }
         end
-      
+
         should_assign_to(:user) { @the_user }
         should_respond_with :success
         should_not_set_the_flash
         should_render_template :edit
       end
     end
-    
+
     context "on DELETE to :destroy" do
       setup do
         delete :destroy, :id => @the_user.id

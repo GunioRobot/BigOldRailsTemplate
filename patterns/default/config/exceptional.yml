@@ -11,13 +11,13 @@ common: &default_settings
   # as long as your deployment environment is not Passenger (mod_rails), this
   # happens in the background so as not to incur a page wait for your users.
   ssl: false
-  
+
 development:
   <<: *default_settings
   # Normally no reason to collect exceptions in development
   # NOTE: for trial purposes you may want to enable exceptional in development
   enabled: false
-  
+
 test:
   <<: *default_settings
   # No reason to collect exceptions when running tests by default

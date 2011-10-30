@@ -24,7 +24,7 @@ body {
 	width: 150px;
 	height: 20px;
 	line-height: 40px;
-	text-decoration: none;	
+	text-decoration: none;
 }
 
 #left_menu li {

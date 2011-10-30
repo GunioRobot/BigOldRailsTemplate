@@ -2,17 +2,17 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
   before_filter :admin_required, :only => [:index, :destroy, :impersonate]
-  
+
   def index
     @users = User.all
   end
-  
+
   def new
     @user = User.new
   end
-  
+
   #{user_create_block}
-  
+
   def show
     find_user
   end
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   def edit
     find_user
   end
-  
+
   def update
     find_user
     if @user.update_attributes(params[:user])
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     find_user
     @user.destroy
     flash[:notice] = t('flash.users.destroy.notice')
-    redirect_to(users_url)  
+    redirect_to(users_url)
   end
 
   def impersonate
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     end
     redirect_back_or_default root_url
   end
-  
+
 private
 
   def find_user
@@ -56,5 +56,5 @@ private
       @user = @current_user
     end
   end
-  
+
 end

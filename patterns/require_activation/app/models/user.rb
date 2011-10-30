@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
   before_validation_on_create :make_default_roles
 
   attr_accessible :login, :password, :password_confirmation, :email, :first_name, :last_name
-  
+
   def display_name
     "#{first_name} #{last_name}".strip
   end
-  
+
   def deliver_password_reset_instructions!
     reset_perishable_token!
     Notifier.deliver_password_reset_instructions(self)
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def add_role(role)
-    self.roles << role unless self.has_role?(role) 
+    self.roles << role unless self.has_role?(role)
   end
 
   def remove_role(role)
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   def clear_roles
     self.roles = []
   end
-  
+
   def has_permission?(action)
     case action.to_sym
     when :view_admin_data

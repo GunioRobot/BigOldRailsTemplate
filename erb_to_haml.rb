@@ -10,7 +10,7 @@ module Rails
 
     def block_start?(line)
       block_starters = [/\s+do/, /^-\s+while/, /^-\s+module/, /^-\s+begin/,
-                        /^-\s+case/, /^-\s+class/, /^-\s+unless/, /^-\s+for/, 
+                        /^-\s+case/, /^-\s+class/, /^-\s+unless/, /^-\s+for/,
                         /^-\s+until/, /^-\s*if/]
 
       line = line.to_s
@@ -122,7 +122,7 @@ module Rails
           lines = remove_lines(lines, goner_lines)
 
           altered_lines = []
-          indented_lines = [] 
+          indented_lines = []
           goner_lines = []
 
           line_number = -1

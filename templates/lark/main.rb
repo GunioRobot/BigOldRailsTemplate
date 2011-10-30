@@ -137,11 +137,11 @@ if mail_in_development == "inaction_mailer"
   rakefile 'mail.rake', load_pattern('lib/tasks/mail.rake')
 end
 # rakefile for use with annotate
-rakefile 'annotate.rake', load_pattern('lib/tasks/annotate.rake')   
+rakefile 'annotate.rake', load_pattern('lib/tasks/annotate.rake')
 # adds railroad tasks
 rakefile 'diagrams.rake', load_pattern('lib/tasks/diagrams.rake')
 # adds rake doc:dnote
-rakefile 'doc.rake', load_pattern('lib/tasks/doc.rake')  
+rakefile 'doc.rake', load_pattern('lib/tasks/doc.rake')
 # rakefile for database sizes
 rakefile 'datasize.rake', load_pattern('lib/tasks/datasize.rake')
 # rakefile for use with postgresql

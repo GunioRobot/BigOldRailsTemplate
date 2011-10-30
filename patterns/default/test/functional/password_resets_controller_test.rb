@@ -3,15 +3,15 @@ require 'test_helper'
 class PasswordResetsControllerTest < ActionController::TestCase
 
   should_have_before_filter :load_user_using_perishable_token, :only => [:edit, :update]
-  
+
   context "routing" do
     should_rest_route :create, :new, :edit, :update
-    
+
     context "named routes" do
       setup do
         get :new
       end
-      
+
       should "generate new_password_reset_path" do
         assert_equal "/password_resets/new", new_password_reset_path
       end
@@ -23,13 +23,13 @@ class PasswordResetsControllerTest < ActionController::TestCase
       end
     end
   end
-    
+
   context "on GET to :new" do
     setup do
       #{generate_stub('controller', 'require_no_user', 'true')}
       get :new
     end
-    
+
     should_respond_with :success
     should_render_template :new
     should_not_set_the_flash
@@ -51,13 +51,13 @@ class PasswordResetsControllerTest < ActionController::TestCase
       should_set_the_flash_to I18n.t("flash.password_resets.create.error")
       should_render_template :new
     end
-    
+
     context "with user found" do
       setup do
         @user = User.generate!(:email => "foo@example.com")
         post :create, :email => "foo@example.com"
       end
-      
+
       should_respond_with :redirect
       should_set_the_flash_to I18n.t("flash.password_resets.create.notice")
       should_redirect_to("the home page") { root_url }
@@ -71,7 +71,7 @@ class PasswordResetsControllerTest < ActionController::TestCase
       #{generate_stub 'User', 'find_using_perishable_token', '@user'}
       get :edit, :id => "the token"
     end
-    
+
     should_respond_with :success
     should_render_template :edit
     should_not_set_the_flash
@@ -83,7 +83,7 @@ class PasswordResetsControllerTest < ActionController::TestCase
       @user = User.generate!
       #{generate_stub 'User', 'find_using_perishable_token', '@user'}
     end
-    
+
     context "with successful save" do
       setup do
         #{generate_any_instance_stub 'User', 'save', 'true'}
@@ -94,7 +94,7 @@ class PasswordResetsControllerTest < ActionController::TestCase
       should_set_the_flash_to I18n.t("flash.password_resets.update.notice")
       should_redirect_to("the user's page") { account_url }
     end
-    
+
     context "with failed save" do
       setup do
         #{generate_any_instance_stub 'User', 'save', 'false'}

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class NotifierTest < ActionMailer::TestCase
-  
+
   should "send welcome email" do
     user = User.generate!
     Notifier.deliver_welcome_email(user)
@@ -24,7 +24,7 @@ class NotifierTest < ActionMailer::TestCase
     end
   end
 
-#{extra_notifier_test}  
+#{extra_notifier_test}
 private
   def address_from(decorated_email_address)
     if decorated_email_address =~ /.*<(.+)>/

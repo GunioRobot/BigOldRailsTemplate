@@ -2,7 +2,7 @@ namespace :gems do
   desc "Output gems.yml and .gems in root of app (for Heroku or EngineYard)"
   task :specify => :environment do
     gems = Rails.configuration.gems
-    
+
     # output gems.yml
     yaml = File.join(RAILS_ROOT, "gems.yml")
     File.open(yaml, "w") do |f|
@@ -15,7 +15,7 @@ namespace :gems do
       f.write output.to_yaml
       puts output.to_yaml
     end
-    
+
     # output .gems
     dot_gems = File.join(RAILS_ROOT, ".gems")
     File.open(dot_gems, "w") do |f|

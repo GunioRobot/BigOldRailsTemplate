@@ -1,4 +1,4 @@
---- 
+---
 # These options control the overall code generation strategy. If you omit
 # any of them from the configuration file, you'll be prompted at template
 # run time to supply them.
@@ -32,15 +32,15 @@ require_activation: false
 # mocking library to use in tests: rr, mocha (default)
 mocking: mocha
 # controller_type: rails (default), inherited_resources
-controller_type: rails   
+controller_type: rails
 # mail_in_development: inaction_mailer (default), mock_smtp
 mail_in_development: inaction_mailer
-# post-creation options: pick one or more. 
+# post-creation options: pick one or more.
 #   'heroku' to deploy the project to Heroku
 #   'github' to deploy the project to GitHub
 # default option is do-nothing
 #
-# So for example, to deploy the project to GitHub and then call your own 
+# So for example, to deploy the project to GitHub and then call your own
 # custom CI server setup (which does not actually exist yet!), you'd set up the key
 # this way:
 # post_creation:
@@ -90,7 +90,7 @@ hoptoad_api_key: PASTE_YOUR_API_KEY_HERE
 newrelic_api_key: PASTE_YOUR_API_KEY_HERE
 # Return address info for app/models/notifier.rb
 notifier_email_from: Lark Group <noreply@example.com>
-default_url_options_host: example.com      
+default_url_options_host: example.com
 # used to allow access to the RSS feed from admin_data
 admin_data_user_id: my_user
 admin_data_password: my_password

@@ -8,8 +8,8 @@ ActionController::Routing::Routes.draw do |map|
 #{activation_routes}
   map.register 'register', :controller => "accounts", :action => "new"
   map.root :controller => "pages", :action => "home"
-  map.pages 'pages/:action', :controller => "pages"   
-  
-  map.resource :health_monitor, :controller => "health_monitor", :only => :show, :member => { :monitor_health => :get } 
+  map.pages 'pages/:action', :controller => "pages"
+
+  map.resource :health_monitor, :controller => "health_monitor", :only => :show, :member => { :monitor_health => :get }
   Jammit::Routes.draw(map)
 end

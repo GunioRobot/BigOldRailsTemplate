@@ -40,10 +40,10 @@ Coding Tools
     acts_as_url, String#to_ascii, String#to_html, String#to_url, String#remove_formatting, String.random
 - US State application helpers
 - will-paginate for pagination
-#{'- jQuery and jQueryUI' if javascript_library == 'jquery'}  
+#{'- jQuery and jQueryUI' if javascript_library == 'jquery'}
 #{'  jQuery files are uncompressed, but Jammit will recompress them on deploy. You may want a custom jQueryUI from http://jqueryui.com/download' if javascript_library == 'jquery'}
 - Annotate for annotating model, exemplar, and route files
-- Carmen to handle state and country selects     
+- Carmen to handle state and country selects
 - rake doc:diagram tasks for use with railroad
 
 Database Tools
@@ -96,10 +96,10 @@ Testing Tools
 - time-warp for forcing time in tests (use pretend_now_is)
 - test_benchmark to identify slow tests (in test environment only)
 - query-trace to locate source of queries in the log (development only - turn on via config/initializers/query_trace.rb)
-#{'- jQuery-Lint to keep your jQuery squeaky-clean' if javascript_library == 'jquery'}  
-- Methods to easily create Object Daddy collections (see test_helper.rb)    
+#{'- jQuery-Lint to keep your jQuery squeaky-clean' if javascript_library == 'jquery'}
+- Methods to easily create Object Daddy collections (see test_helper.rb)
 - rcov-plugin to easily run tests with rcov
-                                                 
+
 Miscellaneous
 =============
 - rake doc:dnote creates an HTML page of tasks in the doc folder.

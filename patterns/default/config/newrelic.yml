@@ -1,6 +1,6 @@
 #
-# This file configures the NewRelic RPM Agent, NewRelic RPM monitors Rails 
-# applications with deep visibility and low overhead.  For more information, 
+# This file configures the NewRelic RPM Agent, NewRelic RPM monitors Rails
+# applications with deep visibility and low overhead.  For more information,
 # visit www.newrelic.com.
 #
 # This configuration file is custom generated for Lark Group Lite Account
@@ -11,7 +11,7 @@ common: &default_settings
   # You must specify the licence key associated with your New Relic account.
   # This key binds your Agent's data to your account in the New Relic RPM service.
   license_key: '#{newrelic_api_key}'
-  
+
   # Application Name
   # Set this to be the name of your application as you'd like it show up in RPM.
   # RPM will then auto-map instances of your application into a RPM "application"
@@ -32,7 +32,7 @@ common: &default_settings
   # The newrelic agent generates its own log file to keep its logging information
   # separate from that of your application.  Specify its log level here.
   log_level: info
-  
+
   # The newrelic agent communicates with the RPM service via http by default.
   # If you want to communicate via https to increase security, then turn on
   # SSL by setting this value to true.  Note, this will result in increased
@@ -40,11 +40,11 @@ common: &default_settings
   # work is done asynchronously to the threads that process your application code, so
   # it should not impact response times.
   ssl: false
-  
+
   # Set your application's Apdex threshold value with the 'apdex_t' setting, in seconds. The
   # apdex_t value determines the buckets used to compute your overall Apdex score. Requests
   # that take less than apdex_t seconds to process will be classified as Satisfying transactions;
-  # more than apdex_t seconds as Tolerating transactions; and more than four times the apdex_t 
+  # more than apdex_t seconds as Tolerating transactions; and more than four times the apdex_t
   # value as Frustrating transactions. For more
   # about the Apdex standard, see http://support.newrelic.com/faqs/general/apdex
   apdex_t: 0.5
@@ -59,8 +59,8 @@ common: &default_settings
   # proxy_user:
   # proxy_pass:
 
-  
-  # Tells transaction tracer and error collector (when enabled) whether or not to capture HTTP params. 
+
+  # Tells transaction tracer and error collector (when enabled) whether or not to capture HTTP params.
   # When true, the RoR filter_parameters mechanism is used so that sensitive parameters are not recorded
   capture_params: false
 
@@ -70,35 +70,35 @@ common: &default_settings
   # transaction is the exact call sequence of the transactions including any SQL statements
   # issued.
   transaction_tracer:
-  
+
     # Transaction tracer is enabled by default. Set this to false to turn it off. This feature
     # is only available at the Silver and above product levels.
     enabled: true
-  
- 
+
+
     # When transaction tracer is on, SQL statements can optionally be recorded. The recorder
-    # has three modes, "off" which sends no SQL, "raw" which sends the SQL statement in its 
+    # has three modes, "off" which sends no SQL, "raw" which sends the SQL statement in its
     # original form, and "obfuscated", which strips out numeric and string literals
     record_sql: obfuscated
-    
-    # Threshold in seconds for when to collect stack trace for a SQL call. In other words, 
+
+    # Threshold in seconds for when to collect stack trace for a SQL call. In other words,
     # when SQL statements exceed this threshold, then capture and send to RPM the current
-    # stack trace. This is helpful for pinpointing where long SQL calls originate from  
+    # stack trace. This is helpful for pinpointing where long SQL calls originate from
     stack_trace_threshold: 0.500
-  
+
   # Error collector captures information about uncaught exceptions and sends them to RPM for
   # viewing
   error_collector:
-    
+
     # Error collector is enabled by default. Set this to false to turn it off. This feature
     # is only available at the Silver and above product levels
     enabled: true
-    
+
     # Tells error collector whether or not to capture a source snippet around the place of the
     # error when errors are View related.
-    capture_source: true    
-    
-    # To stop specific errors from reporting to RPM, set this property to comma separated 
+    capture_source: true
+
+    # To stop specific errors from reporting to RPM, set this property to comma separated
     # values
     #
     #ignore_errors: ActionController::RoutingError, ...
@@ -116,9 +116,9 @@ development:
   # the agent on in development mode.
   enabled: false
 
-  # When running in Developer Mode, the New Relic Agent will present 
-  # performance information on the last 100 transactions you have 
-  # executed since starting the mongrel.  to view this data, go to 
+  # When running in Developer Mode, the New Relic Agent will present
+  # performance information on the last 100 transactions you have
+  # executed since starting the mongrel.  to view this data, go to
   # http://localhost:3000/newrelic
   developer: true
 
